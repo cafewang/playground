@@ -25,6 +25,16 @@ public interface MysqlRepo extends JpaRepository<Employee, Integer> {
     @Query(nativeQuery = true, value = "select * from user.employee where id >= :min and id < :max for update")
     List<Employee> leftCloseRightOpen(@Param("min") int min, @Param("max")int max);
 
+    @Query(nativeQuery = true, value = "select * from user.employee where no >= :min and no < :max for update")
+    List<Employee> selectForUpdateByNoLeftCloseRightOpen(@Param("min") int min, @Param("max")int max);
+
     @Query(nativeQuery = true, value = "select * from user.employee where id > :min and id <= :max for update")
     List<Employee> leftOpenRightClose(@Param("min") int min, @Param("max")int max);
+
+    @Query(nativeQuery = true, value = "select * from employee where no=:no for update")
+    List<Employee> selectForUpdateByNo(@Param("no") int no);
+
+    @Modifying
+    @Query("update Employee set name=:name where no=:no")
+    void updateByNo(@Param("no")int no, @Param("name")String name);
 }

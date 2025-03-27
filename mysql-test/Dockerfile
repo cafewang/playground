@@ -6,6 +6,7 @@ create schema `user`;\n\
 CREATE TABLE `user`.`employee` (\n\
   `id` int NOT NULL AUTO_INCREMENT,\n\
   `no` int NOT NULL,\n\
+  `name` varchar(45) NULL default "",\n\
   PRIMARY KEY (`id`),\n\
   UNIQUE KEY `no_UNIQUE` (`no`)\n\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n\
