@@ -1,3 +1,3 @@
 rootProject.name = 'playground'
-include('mysql-test')
+include('mysql-test', 'os-related')
 
