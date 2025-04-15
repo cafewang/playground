@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 public class Debugger {
@@ -18,13 +19,16 @@ public class Debugger {
         this.mainClass = mainClass;
     }
 
-    public VirtualMachine connectAndLaunchVM() throws Exception {
+    public VirtualMachine connectAndLaunchVM(Set<String> vmOptions) throws Exception {
         LaunchingConnector launchingConnector = Bootstrap.virtualMachineManager()
                 .defaultConnector();
         Map<String, Connector.Argument> arguments = launchingConnector.defaultArguments();
         arguments.get("main").setValue(mainClass.getName());
+        StringBuilder param = new StringBuilder();
         String workingDir = Debugger.class.getClassLoader().getResource("").getPath() + "../main";
-        arguments.get("options").setValue(String.format("-Duser.dir=%s", workingDir));
+        param.append(String.format("-Duser.dir=%s", workingDir));
+        vmOptions.forEach(option -> param.append(" ").append(option));
+        arguments.get("options").setValue(param.toString());
         return launchingConnector.launch(arguments);
     }
 
